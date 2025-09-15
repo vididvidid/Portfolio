@@ -1,0 +1,158 @@
+{
+  "hero": {
+    "name": "Yash Kumar Kasaudhan",
+    "tagline": "<strong>GSoC Contributor</strong> • <strong>ICPC Regionalist</strong> • Full-Stack Developer",
+    "subtitle": "Building scalable solutions at the intersection of algorithms and innovation",
+    "socials": [
+      {
+        "name": "GitHub",
+        "url": "https://github.com/vididvidid/",
+        "icon": "github"
+      },
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/yash-kumar-kasaudhan/",
+        "icon": "linkedin"
+      },
+      {
+        "name": "Twitter",
+        "url": "https://x.com/yashKumarKasau",
+        "icon": "twitter"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "id": "gsoc-2024",
+      "title": "Google Summer of Code Contributor",
+      "organization": "Linux Foundation / OpenPrinting",
+      "period": "May 2024 - Present",
+      "dateStart": "2024-05",
+      "dateEnd": null,
+      "highlights": [
+        "Developing <strong>CPDB (Common Printing Dialog Backend)</strong> for unified printing architecture",
+        "Implementing cross-platform print dialog solutions for Linux ecosystem",
+        "Contributing to open-source printing standards adopted by major distributions"
+      ],
+      "tags": ["GSoC", "Open Source", "Linux", "C/C++"],
+      "type": "opensource"
+    },
+    {
+      "id": "sdpmss-2023",
+      "title": "Full-Stack Developer",
+      "organization": "SDPMSS Organization",
+      "period": "June 2023 - August 2023",
+      "dateStart": "2023-06",
+      "dateEnd": "2023-08",
+      "highlights": [
+        "Architected responsive web applications using <strong>React.js</strong> and <strong>Node.js</strong>",
+        "Reduced API response time by <strong>40%</strong> through database optimization",
+        "Deployed containerized applications with <strong>Docker</strong> and CI/CD pipelines"
+      ],
+      "tags": ["React", "Node.js", "Docker", "MongoDB"],
+      "type": "professional"
+    }
+  ],
+  "achievements": [
+    {
+      "id": "icpc-2024",
+      "title": "ICPC Regionalist",
+      "organization": "International Collegiate Programming Contest",
+      "date": "December 2024",
+      "highlight": "<strong>1st in college</strong> • Qualified for Asia West Regionals",
+      "impact": "Top 5% nationwide",
+      "category": "competitive-programming"
+    },
+    {
+      "id": "sih-2024",
+      "title": "Smart India Hackathon Grand Finalist",
+      "organization": "Government of India",
+      "date": "December 2024",
+      "highlight": "<strong>1st Runner-up</strong> • National Level Competition",
+      "impact": "Selected from 50,000+ teams",
+      "category": "hackathon"
+    },
+    {
+      "id": "innokshetra-2024",
+      "title": "InnoKshetra 2024 Finalist",
+      "organization": "IIT Kanpur",
+      "date": "November 2024",
+      "highlight": "Innovation Challenge • <strong>Top 10 teams</strong>",
+      "impact": "₹25,000 prize pool",
+      "category": "innovation"
+    },
+    {
+      "id": "hackathon-wins",
+      "title": "5× Hackathon Winner",
+      "organization": "Multiple Organizations",
+      "date": "2023 - 2024",
+      "highlight": "<strong>BioHive</strong> • <strong>DSA Hackathon</strong> • <strong>Hackfed 1.0</strong> • More",
+      "impact": "Consistent top performer",
+      "category": "hackathon"
+    }
+  ],
+  "projects": [
+    {
+      "id": "project-template",
+      "title": "Project Title",
+      "description": "Brief, impactful description focusing on the problem solved",
+      "highlights": [
+        "Key achievement or metric",
+        "Technology breakthrough",
+        "User impact"
+      ],
+      "techStack": ["React", "Node.js", "PostgreSQL"],
+      "links": {
+        "github": "https://github.com/vididvidid/project",
+        "live": "https://project.example.com"
+      },
+      "featured": true
+    }
+  ],
+  "skills": {
+    "languages": ["C++", "JavaScript", "TypeScript", "Python", "Java"],
+    "frontend": ["React.js", "Next.js", "Tailwind CSS", "Redux"],
+    "backend": ["Node.js", "Express.js", "Django", "FastAPI"],
+    "databases": ["PostgreSQL", "MongoDB", "Redis", "MySQL"],
+    "tools": ["Git", "Docker", "Kubernetes", "AWS", "Linux"],
+    "concepts": ["Data Structures", "Algorithms", "System Design", "Microservices"]
+  },
+  "openSource": [
+    {
+      "id": "cpdb-backend",
+      "project": "CPDB Backend",
+      "organization": "OpenPrinting",
+      "description": "Core contributor to Common Printing Dialog Backend",
+      "contributions": [
+        "Implemented print queue management system",
+        "Added support for IPP protocol",
+        "Improved error handling and logging"
+      ],
+      "stars": 150,
+      "pullRequests": 12,
+      "link": "https://github.com/OpenPrinting/cpdb-backend",
+      "period": "May 2024 - Present"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "gsoc-cert",
+      "title": "Google Summer of Code",
+      "issuer": "Google",
+      "date": "2024",
+      "credential": "Contributor Certificate"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2024-12-15",
+    "version": "1.0.0",
+    "seoKeywords": [
+      "Yash Kumar Kasaudhan",
+      "GSoC Contributor",
+      "ICPC Regionalist",
+      "Full-Stack Developer",
+      "Open Source",
+      "Linux Foundation"
+    ]
+  }
+}

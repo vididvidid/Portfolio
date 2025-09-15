@@ -1,18 +1,26 @@
-/**
- * For more details on how to configure Wrangler, refer to:
- * https://developers.cloudflare.com/workers/wrangler/configuration/
- */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "portfolioyash",
 	"main": "worker/index.ts",
 	"compatibility_date": "2025-09-13",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
 	"assets": {
 		"not_found_handling": "single-page-application"
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"vars": {
+		"SUPABASE_PROJECT_ID": "tnwdtovxugbuqvaargsq"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "PORTFOLIO_KV",
+			"id": "da1c7fa4266e4277b11d70655662b66f"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
