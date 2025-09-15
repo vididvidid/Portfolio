@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Twitter, Linkedin, Github, ExternalLink, Calendar, Clock, ArrowUpRight, Settings, LogOut } from 'lucide-react';
+import { Twitter, Linkedin, Github, ExternalLink, Settings, LogOut, Star, GitPullRequest } from 'lucide-react';
 import { BackgroundAnimation } from './components/BackgroundAnimation';
 import { AdminLogin } from './components/AdminLogin';
 import { AdminPanel } from './components/AdminPanel';
@@ -9,7 +9,6 @@ import { ScrollAudio } from './components/ScrollAudio';
 export default function App() {
   const [content, setContent] = useState(defaultPortfolioData);
   const [showAllCertifications, setShowAllCertifications] = useState(false);
-  const [showAllBlogs, setShowAllBlogs] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
@@ -212,7 +211,7 @@ export default function App() {
                   <div key={exp.id || index} className="fade-text relative hover-lift">
                     <div className="absolute -left-2 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg"></div>
                     <div className="ml-8 space-y-4">
-                      <time className="mono-font text-sm text-muted-foreground tracking-wide">{exp.period}</time>
+                      {exp.period && <time className="mono-font text-sm text-muted-foreground tracking-wide">{exp.period}</time>}
                       <h3 className="text-xl sm:text-2xl md:text-3xl">{exp.title}</h3>
                       <p className="text-lg text-muted-foreground">{exp.organization}</p>
                       <div className="space-y-2">
@@ -262,15 +261,28 @@ export default function App() {
                   <div key={achievement.id || index} className="fade-text relative hover-lift">
                     <div className="absolute -left-2 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg"></div>
                     <div className="ml-8 space-y-4">
-                      <time className="mono-font text-sm text-muted-foreground tracking-wide">{achievement.date}</time>
+                      {achievement.date && <time className="mono-font text-sm text-muted-foreground tracking-wide">{achievement.date}</time>}
                       <h3 className="text-xl sm:text-2xl md:text-3xl">{achievement.title}</h3>
                       <p className="text-lg text-muted-foreground">{achievement.organization}</p>
                       <div className="space-y-2">
-                        <div className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed rich-content">
-                          <span dangerouslySetInnerHTML={{ __html: achievement.highlight }} />
-                        </div>
+                        {achievement.highlight && <div className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed rich-content" dangerouslySetInnerHTML={{ __html: achievement.highlight }} />}
                         {achievement.impact && <div className="text-base text-muted-foreground"><em>{achievement.impact}</em></div>}
                       </div>
+                      {achievement.links && typeof achievement.links === 'object' && (
+                        <div className="flex gap-4 flex-wrap pt-2">
+                          {Object.entries(achievement.links).map(([key, value]) => (
+                            <a 
+                              key={key}
+                              href={value as string}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-300 flex items-center gap-1 text-sm sm:text-base"
+                            >
+                              {key.charAt(0).toUpperCase() + key.slice(1)} <ExternalLink className="w-4 h-4" />
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -291,7 +303,7 @@ export default function App() {
                    <div key={project.id || index} className="fade-text relative hover-lift">
                      <div className="absolute -left-2 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg"></div>
                      <div className="ml-8 space-y-4">
-                       <time className="mono-font text-sm text-muted-foreground tracking-wide">{project.period}</time>
+                       {project.period && <time className="mono-font text-sm text-muted-foreground tracking-wide">{project.period}</time>}
                        <h3 className="text-xl sm:text-2xl md:text-3xl">{project.title}</h3>
                        <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">{project.description}</p>
                        <div className="space-y-2">
@@ -316,65 +328,6 @@ export default function App() {
              </div>
            )}
 
-          {/* Blogs Section */}
-          {content.blogs?.length > 0 && (
-            <div className="space-y-16">
-              <div className="fade-text">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 tracking-tight">Blogs</h2>
-                <div className="w-16 sm:w-24 h-0.5 bg-primary/30"></div>
-              </div>
-              <div className="fade-text space-y-8">
-                <div className="grid grid-cols-1 gap-8">
-                  {content.blogs.slice(0, showAllBlogs ? content.blogs.length : 3).map((blog: any, index: number) => (
-                    <article key={blog.id || index} className="hover-lift p-6 border border-border/30 rounded-lg space-y-4">
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground mono-font">
-                        <div className="flex items-center gap-1"><Calendar className="w-4 h-4" />{new Date(blog.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-                        <div className="flex items-center gap-1"><Clock className="w-4 h-4" />{blog.readTime}</div>
-                      </div>
-                      <h3 className="text-lg sm:text-xl md:text-2xl hover:text-primary transition-colors duration-300"><a href={blog.url} target="_blank" rel="noopener noreferrer">{blog.title}</a></h3>
-                      <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">{blog.excerpt}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-wrap gap-2">
-                          {blog.tags?.map((tag: string, idx: number) => <span key={idx} className="mono-font text-xs px-2 py-1 bg-muted text-muted-foreground rounded">{tag}</span>)}
-                        </div>
-                        <a href={blog.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors duration-300 flex items-center gap-1 text-sm">Read More <ArrowUpRight className="w-4 h-4" /></a>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-                {content.blogs.length > 3 && (
-                  <div className="text-center">
-                    {!showAllBlogs ? (
-                      <button onClick={() => setShowAllBlogs(true)} className="text-primary underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-300">Show More Blogs</button>
-                    ) : (
-                      <a href={linkedInProfile} target="_blank" rel="noopener noreferrer" className="text-primary underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-300 flex items-center gap-1 justify-center">More on LinkedIn <ExternalLink className="w-4 h-4" /></a>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Skills Section */}
-          {content.skills && (
-            <div className="space-y-16">
-              <div className="fade-text">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 tracking-tight">Skills</h2>
-                <div className="w-16 sm:w-24 h-0.5 bg-primary/30"></div>
-              </div>
-              <div className="fade-text grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {Object.entries(content.skills).map(([category, skills]: [string, any]) => (
-                  <div key={category} className="space-y-4">
-                    <h3 className="text-lg sm:text-xl capitalize">{category.replace(/([A-Z])/g, ' $1').trim()}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {skills?.map((skill: string, idx: number) => <span key={idx} className="mono-font text-xs px-2 py-1 bg-muted text-muted-foreground rounded">{skill}</span>)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Open Source Section */}
           {content.openSource?.length > 0 && (
              <div className="space-y-16">
@@ -388,37 +341,21 @@ export default function App() {
                   <div key={project.id || index} className="fade-text relative hover-lift">
                     <div className="absolute -left-2 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg"></div>
                     <div className="ml-8 space-y-4">
-                      <time className="mono-font text-sm text-muted-foreground tracking-wide">{project.period}</time>
+                      {project.period && <time className="mono-font text-sm text-muted-foreground tracking-wide">{project.period}</time>}
                       <h3 className="text-xl sm:text-2xl md:text-3xl">{project.project}</h3>
                       <p className="text-lg text-muted-foreground">{project.organization}</p>
                       <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">{project.description}</p>
                       <div className="space-y-2">
                         {project.contributions?.map((contribution: string, idx: number) => <div key={idx} className="text-base text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: `• ${contribution}` }} />)}
                       </div>
-                      <div className="space-y-2">
-                        {project.links?.github && <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="text-primary underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-300 inline-block">View Project</a>}
-                        {project.impact && <p className="text-sm text-muted-foreground italic">{project.impact}</p>}
+                      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2">
+                        {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-primary underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-300 inline-flex items-center gap-1">View Project <ExternalLink className="w-4 h-4" /></a>}
+                        {project.stars != null && <div className="flex items-center gap-1 text-muted-foreground"><Star className="w-4 h-4 text-yellow-500" /><span>{project.stars}</span></div>}
+                        {project.pullRequests != null && <div className="flex items-center gap-1 text-muted-foreground"><GitPullRequest className="w-4 h-4 text-blue-500" /><span>{project.pullRequests}</span></div>}
                       </div>
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          )}
-
-          {/* Philosophy Section */}
-          {content.philosophy && (
-            <div className="space-y-16">
-              <div className="fade-text">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 tracking-tight">Philosophy</h2>
-                <div className="w-16 sm:w-24 h-0.5 bg-primary/30"></div>
-              </div>
-              <div className="fade-text ml-8 space-y-8">
-                <blockquote className="text-xl sm:text-2xl md:text-3xl leading-tight font-light italic">"{content.philosophy.principle}"</blockquote>
-                <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">{content.philosophy.approach}</p>
-                <div className="flex flex-wrap gap-3">
-                  {content.philosophy.values?.map((value: string, idx: number) => <span key={idx} className="mono-font text-sm px-3 py-1 bg-primary/10 text-primary rounded-full">{value}</span>)}
-                </div>
               </div>
             </div>
           )}
@@ -433,11 +370,29 @@ export default function App() {
               <div className="fade-text space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {content.certifications.slice(0, showAllCertifications ? content.certifications.length : 6).map((cert: any, index: number) => (
-                    <div key={cert.id || index} className="hover-lift p-6 border border-border/30 rounded-lg">
-                      <time className="mono-font text-xs text-muted-foreground tracking-wide">{cert.date}</time>
-                      <h3 className="text-lg mt-2 mb-3">{cert.title}</h3>
-                      <p className="text-sm text-muted-foreground">{cert.issuer}</p>
-                      <span className="mono-font text-xs px-2 py-1 bg-accent text-accent-foreground rounded mt-3 inline-block">{cert.category}</span>
+                    <div key={cert.id || index} className="hover-lift p-6 border border-border/30 rounded-lg flex flex-col">
+                      <div className="flex-grow">
+                        {cert.date && <time className="mono-font text-xs text-muted-foreground tracking-wide">{cert.date}</time>}
+                        <h3 className="text-lg mt-2 mb-3">{cert.title}</h3>
+                        <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+                      </div>
+                      <div className="mt-4">
+                        {cert.links && typeof cert.links === 'object' && (
+                          <div className="flex gap-4 flex-wrap">
+                            {Object.entries(cert.links).map(([key, value]) => (
+                              <a 
+                                key={key}
+                                href={value as string}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-300 flex items-center gap-1 text-sm"
+                              >
+                                {key.charAt(0).toUpperCase() + key.slice(1)} <ExternalLink className="w-4 h-4" />
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -453,12 +408,12 @@ export default function App() {
               </div>
             </div>
           )}
-
+          
           {/* Footer */}
           <div className="fade-text text-center space-y-8 pt-24">
             <div className="w-px h-16 bg-gradient-to-b from-primary/30 to-transparent mx-auto"></div>
             <p className="mono-font text-sm text-muted-foreground tracking-wide">
-              Jai Shree Ram!
+              Crafted with intention
             </p>
           </div>
         </section>
